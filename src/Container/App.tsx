@@ -1,12 +1,13 @@
 import './App.css';
-import AddItems from './Components/AddItems/AddItems.tsx';
-import hamburger from './assets/burger.png';
-import cheeseBurger from './assets/cheese.png';
-import fries from './assets/fries.png';
-import coffee from './assets/coffee.png';
-import tea from './assets/tea.png';
-import coke from './assets/coke.png';
+import hamburger from '../assets/burger.png'
+import cheeseBurger from '../assets/cheese.png';
+import fries from '../assets/fries.png';
+import coffee from '../assets/coffee.png';
+import tea from '../assets/tea.png';
+import coke from '../assets/coke.png';
 import React, {useState} from 'react';
+import OrderDetails from '../Components/OrderDetails/OrderDetails.tsx';
+import AddItems from '../Components/AddItems/AddItems.tsx';
 
 interface MenuItem {
   name: string;
@@ -37,14 +38,30 @@ const App: React.FC = () => {
     }
   };
 
+  const handleRemoveItem = (itemName: string) => {
+    order.delete(itemName);
+    setOrder(new Map(order));
+  };
+
   const getPrice = (itemName: string) => {
     const item = menuItems.find(i => i.name === itemName);
     return item ? item.price : 0;
   };
 
+  const calculateTotal = (): number => {
+    let total = 0;
+    order.forEach((value) => {
+      total += value.price;
+    });
+    return total;
+  };
+
+  const orderArray = Array.from(order, ([item, { quantity, price }]) => ({ item, quantity, price }));
+
   return (
     <div className="app">
       <AddItems menuItems={menuItems} onAddItem={handleAddItem} />
+      <OrderDetails order={orderArray} total={calculateTotal()} onRemoveItem={handleRemoveItem} />
     </div>
   );
 };

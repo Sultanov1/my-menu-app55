@@ -20,7 +20,7 @@ const AddItems: React.FC<AddItemsProps> = ({ menuItems, onAddItem }) => {
             <div className="item-container" onClick={() => handleItemClick(item.name)}>
               <img src={item.image} alt={item.name} />
               <h3>{item.name}</h3>
-              <h3>Price: {item.price}KGS</h3>
+              <h4>Price: {item.price}KGS</h4>
               <div>
               </div>
             </div>
