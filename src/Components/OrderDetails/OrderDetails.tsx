@@ -1,4 +1,5 @@
 import React from 'react';
+import '../AddItems/AddItems.css'
 
 interface OrderDetailsProps {
   order: { item: string; quantity: number; price: number }[];
@@ -9,12 +10,12 @@ interface OrderDetailsProps {
 const OrderDetails: React.FC<OrderDetailsProps> = ({ order, total, onRemoveItem }) => {
   return (
     <div className="order-details">
-      <h2>Order Details</h2>
-      {order.length === 0 ? (
-        <p>No items in the order</p>
+          <h2>Order Details</h2>
+        {order.length === 0 ? (
+          <p className='order-text'>No items in the order</p>
       ) : (
         <>
-          <ul>
+          <ul className='nav-ul'>
             {order.map((item) => (
               <li key={item.item}>
                 {item.quantity}x {item.item} - {item.price}KGS

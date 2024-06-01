@@ -39,7 +39,7 @@ const App: React.FC = () => {
   };
 
   const handleRemoveItem = (itemName: string) => {
-    order.delete(itemName);
+   order.delete(itemName);
     setOrder(new Map(order));
   };
 
@@ -60,8 +60,8 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <AddItems menuItems={menuItems} onAddItem={handleAddItem} />
       <OrderDetails order={orderArray} total={calculateTotal()} onRemoveItem={handleRemoveItem} />
+      <AddItems menuItems={menuItems} onAddItem={handleAddItem} />
     </div>
   );
 };

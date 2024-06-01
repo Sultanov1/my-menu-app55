@@ -12,11 +12,11 @@ const AddItems: React.FC<AddItemsProps> = ({ menuItems, onAddItem }) => {
   };
 
   return (
-    <div className="add-items">
+    <div className="card-item">
       <h2>Add items</h2>
-      <ul>
+      <ul className='item'>
         {menuItems.map((item) => (
-          <li key={item.name}>
+          <li className='nav-li' key={item.name}>
             <div className="item-container" onClick={() => handleItemClick(item.name)}>
               <img src={item.image} alt={item.name} />
               <h3>{item.name}</h3>
