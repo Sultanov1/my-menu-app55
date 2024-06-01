@@ -1,20 +1,32 @@
 import React from 'react';
+import './AddItems.css';
 
-interface IAddItemProps {
-  name: string;
-  price: number;
-  img: string;
+interface AddItemsProps {
+  menuItems: { name: string; price: number; image: string }[];
+  onAddItem: (item: string) => void;
 }
 
-const AddItems: React.FC<IAddItemProps> = ({name, price, img}) => {
+const AddItems: React.FC<AddItemsProps> = ({ menuItems, onAddItem }) => {
+  const handleItemClick = (itemName: string) => {
+    onAddItem(itemName);
+  };
+
   return (
-    <div>
-      <h3>Add items</h3>
-      <button>
-        <img src={img} alt="name"/>
-        <h3>{name}</h3>
-        <h3>Price: {price} KGS</h3>
-      </button>
+    <div className="add-items">
+      <h2>Add items</h2>
+      <ul>
+        {menuItems.map((item) => (
+          <li key={item.name}>
+            <div className="item-container" onClick={() => handleItemClick(item.name)}>
+              <img src={item.image} alt={item.name} />
+              <h3>{item.name}</h3>
+              <h3>Price: {item.price}KGS</h3>
+              <div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

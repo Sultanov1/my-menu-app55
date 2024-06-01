@@ -6,22 +6,46 @@ import fries from './assets/fries.png';
 import coffee from './assets/coffee.png';
 import tea from './assets/tea.png';
 import coke from './assets/coke.png';
+import React, {useState} from 'react';
 
+interface MenuItem {
+  name: string;
+  price: number;
+  image: string;
+}
 
-const App = () => {
-  const menuItems = [
-    {name: 'Hamburger', price: 80, img: hamburger},
-    {name: 'cheeseBurger', price: 90, img: cheeseBurger},
-    {name: 'fries', price: 45, img: fries},
-    {name: 'Coffee', price: 70, img: coffee},
-    {name: 'Tea', price: 50, img: tea},
-    {name: 'Coke', price: 40, img: coke}
-  ]
+const App: React.FC = () => {
+  const [order, setOrder] = useState<Map<string, { quantity: number; price: number }>>(new Map());
+  const menuItems: MenuItem[] = [
+    {name: 'Hamburger', price: 80, image: hamburger},
+    {name: 'cheeseBurger', price: 90, image: cheeseBurger},
+    {name: 'fries', price: 45, image: fries},
+    {name: 'Coffee', price: 70, image: coffee},
+    {name: 'Tea', price: 50, image: tea},
+    {name: 'Coke', price: 40, image: coke}
+  ];
+
+  const handleAddItem = (itemName: string) => {
+    const existingItem = order.get(itemName);
+
+    if (existingItem) {
+      const updatedQuantity = existingItem.quantity + 1;
+      order.set(itemName, { quantity: updatedQuantity, price: updatedQuantity * getPrice(itemName) });
+      setOrder(new Map(order));
+    } else {
+      setOrder(new Map(order.set(itemName, { quantity: 1, price: getPrice(itemName) })));
+    }
+  };
+
+  const getPrice = (itemName: string) => {
+    const item = menuItems.find(i => i.name === itemName);
+    return item ? item.price : 0;
+  };
 
   return (
-    <>
-      <AddItems name={menuItems[0].name} price={menuItems[0].price} img={menuItems[0].img} />
-    </>
+    <div className="app">
+      <AddItems menuItems={menuItems} onAddItem={handleAddItem} />
+    </div>
   );
 };
 
